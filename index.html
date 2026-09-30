@@ -74,10 +74,10 @@
       <button class="btn-verify" onclick="verifyManualId()">🔐 VERIFY REGISTRATION ID</button>
     </div>
 
-    <!-- Hidden endpoint override toggle -->
+    <!-- Hidden endpoint toggle -->
     <div class="config-toggle" onclick="toggleConfig()">⚙️ Advanced Settings</div>
     <div class="config-box" id="configBox">
-      <input type="text" id="apiUrl" placeholder="Override Web App URL">
+      <input type="text" id="apiUrl" placeholder="Override Apps Script Web App URL">
     </div>
 
     <button class="btn" id="resumeBtn" style="display:none;" onclick="resumeScanner()">Verify Next Attendee</button>
@@ -90,7 +90,6 @@
   </div>
 
   <script>
-    // Embedded Web App URL
     const DEFAULT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxmu-dMA3x_5_wsd9paoIG3qERKIxJrtISbUBOt3bcnCSRnlFLxc5mkdVN39hvYS0P2/exec";
 
     const customApi = localStorage.getItem("nexora_api_url") || "";
@@ -118,7 +117,7 @@
         { fps: 10, qrbox: { width: 250, height: 250 } },
         onScanSuccess
       ).catch(err => {
-        console.error("Camera start error:", err);
+        console.error("Camera initialization error:", err);
       });
     }
 
@@ -143,19 +142,20 @@
 
     async function executeVerification(payload) {
       const apiUrl = getActiveApiUrl();
-
       showLoading();
 
       try {
         const res = await fetch(apiUrl, {
           method: "POST",
           headers: { "Content-Type": "text/plain;charset=utf-8" },
-          body: JSON.stringify(payload)
+          body: JSON.stringify(payload),
+          redirect: "follow"
         });
         const data = await res.json();
         renderResult(data);
       } catch (err) {
-        renderError("Connection Failed. Verify internet connection.");
+        console.error("Fetch error:", err);
+        renderError("Connection Failed. Verify internet connection & Apps Script 'Anyone' access.");
       }
     }
 
