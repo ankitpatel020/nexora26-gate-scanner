@@ -38,7 +38,7 @@
     .divider:not(:empty)::after { margin-left: .75em; }
 
     /* Hidden Configuration */
-    .config-toggle { margin-top: 14px; text-align: center; font-size: 10px; color: #444; cursor: pointer; user-select: none; }
+    .config-toggle { margin-top: 14px; text-align: center; font-size: 10px; color: #333; cursor: pointer; user-select: none; }
     .config-box { display: none; margin-top: 8px; font-size: 11px; }
     .config-box input { width: 100%; padding: 8px 12px; background: #000; border: 1px solid #333; border-radius: 6px; color: #fff; font-size: 11px; }
 
@@ -74,10 +74,10 @@
       <button class="btn-verify" onclick="verifyManualId()">🔐 VERIFY REGISTRATION ID</button>
     </div>
 
-    <!-- Hidden endpoint toggle -->
+    <!-- Hidden endpoint override toggle -->
     <div class="config-toggle" onclick="toggleConfig()">⚙️ Advanced Settings</div>
     <div class="config-box" id="configBox">
-      <input type="text" id="apiUrl" placeholder="Override Apps Script Web App URL">
+      <input type="text" id="apiUrl" placeholder="Override Web App URL">
     </div>
 
     <button class="btn" id="resumeBtn" style="display:none;" onclick="resumeScanner()">Verify Next Attendee</button>
@@ -90,8 +90,8 @@
   </div>
 
   <script>
-    // Embedded Web App URL (hidden from UI)
-    const DEFAULT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbzk9Q_UWMJ1oOc8PV3xcEViaBSfcgPS-nYDkQQnTW76ZDHDK6Vvq_RMWIxUF1ax2En2Yg/exec";
+    // Embedded Web App URL
+    const DEFAULT_WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxmu-dMA3x_5_wsd9paoIG3qERKIxJrtISbUBOt3bcnCSRnlFLxc5mkdVN39hvYS0P2/exec";
 
     const customApi = localStorage.getItem("nexora_api_url") || "";
     document.getElementById("apiUrl").value = customApi;
@@ -143,11 +143,6 @@
 
     async function executeVerification(payload) {
       const apiUrl = getActiveApiUrl();
-      if (!apiUrl || apiUrl.includes("YOUR_DEPLOYED_WEB_APP_ID")) {
-        alert("Please configure a valid Google Apps Script Web App URL first.");
-        resumeScanner();
-        return;
-      }
 
       showLoading();
 
