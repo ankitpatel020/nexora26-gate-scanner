@@ -3,686 +3,421 @@
 
 <head>
 
-  <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
 
-  <title>
-    NEXORA 2026 — Gate Entry Scanner
-  </title>
+<title>NEXORA 2026 — Gate Scanner</title>
 
-  <script src="https://unpkg.com/html5-qrcode"></script>
 
-  <style>
+<script src="https://unpkg.com/html5-qrcode"></script>
 
-    :root {
 
-      --bg: #070709;
-      --card: #121217;
+<style>
 
-      --gold: #d4af37;
-      --gold-light: #f3e5ab;
+* {
+  box-sizing: border-box;
+}
 
-      --green: #22c55e;
-      --red: #ef4444;
 
-      --text: #f5f5f5;
-      --muted: #a3a3a3;
+body {
 
-    }
+  margin: 0;
 
+  min-height: 100vh;
 
-    * {
+  background:
+    radial-gradient(
+      circle at top,
+      #222222 0%,
+      #0a0a0c 45%,
+      #050505 100%
+    );
 
-      box-sizing: border-box;
+  color: white;
 
-      margin: 0;
-      padding: 0;
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        sans-serif;
+}
 
-    }
 
+.container {
 
-    body {
+  width: 100%;
 
-      background:
-        var(--bg);
+  max-width: 620px;
 
-      color:
-        var(--text);
+  margin: auto;
 
-      padding:
-        16px;
+  padding: 20px;
 
-      min-height:
-        100vh;
+}
 
-      display:
-        flex;
 
-      flex-direction:
-        column;
+.header {
 
-      align-items:
-        center;
+  text-align: center;
 
-    }
+  padding: 20px 0 25px;
 
+}
 
-    .header {
 
-      text-align:
-        center;
+.small-title {
 
-      margin-bottom:
-        16px;
+  color: #d4af37;
 
-    }
+  font-size: 12px;
 
+  letter-spacing: 5px;
 
-    .header h1 {
+  font-weight: bold;
 
-      font-size:
-        24px;
+}
 
-      color:
-        var(--gold);
 
-      letter-spacing:
-        2px;
+.logo {
 
-    }
+  font-size: 42px;
 
+  font-weight: 900;
 
-    .header p {
+  margin-top: 7px;
 
-      font-size:
-        12px;
+}
 
-      color:
-        var(--muted);
 
-    }
+.subtitle {
 
+  color: #aaa;
 
-    .scanner-card {
+  margin-top: 7px;
 
-      width:
-        100%;
+}
 
-      max-width:
-        480px;
 
-      background:
-        var(--card);
+.status {
 
-      border:
-        1px solid #2a261a;
+  display: flex;
 
-      border-radius:
-        16px;
+  align-items: center;
 
-      padding:
-        16px;
+  justify-content: center;
 
-      box-shadow:
-        0 8px 30px rgba(
-          0,
-          0,
-          0,
-          0.7
-        );
+  gap: 8px;
 
-    }
+  margin-top: 15px;
 
+  color: #aaa;
 
-    #reader {
+  font-size: 13px;
 
-      width:
-        100%;
+}
 
-      border-radius:
-        12px;
 
-      overflow:
-        hidden;
+.dot {
 
-      border:
-        1px solid #333;
+  width: 9px;
 
-    }
+  height: 9px;
 
+  border-radius: 50%;
 
-    /* ======================================================
-       MANUAL SECTION
-       ====================================================== */
+  background: #26d97f;
 
-    .manual-box {
+  box-shadow:
+    0 0 10px #26d97f;
 
-      margin-top:
-        18px;
+}
 
-      text-align:
-        left;
 
-    }
+.card {
 
+  background: #0d0d10;
 
-    .field-label {
+  border: 1px solid #333;
 
-      font-size:
-        11px;
+  border-radius: 18px;
 
-      font-weight:
-        800;
+  padding: 20px;
 
-      color:
-        #bca355;
+  margin-bottom: 18px;
 
-      letter-spacing:
-        1.5px;
+  box-shadow:
+    0 15px 45px rgba(0,0,0,.35);
 
-      text-transform:
-        uppercase;
+}
 
-      margin-bottom:
-        6px;
 
-      display:
-        block;
+.scanner {
 
-    }
+  overflow: hidden;
 
+  border-radius: 14px;
 
-    .input-reg {
+  background: #000;
 
-      width:
-        100%;
+}
 
-      padding:
-        14px 16px;
 
-      background:
-        #000;
+#reader {
 
-      border:
-        1.5px solid #332b17;
+  width: 100%;
 
-      border-radius:
-        10px;
+}
 
-      color:
-        #fff;
 
-      font-size:
-        15px;
+.manual-title {
 
-      font-weight:
-        700;
+  color: #d4af37;
 
-      text-align:
-        center;
+  font-size: 13px;
 
-      letter-spacing:
-        1px;
+  font-weight: bold;
 
-      outline:
-        none;
+  margin-bottom: 10px;
 
-    }
+  text-transform: uppercase;
 
+  letter-spacing: 1px;
 
-    .input-reg:focus {
+}
 
-      border-color:
-        var(--gold);
 
-    }
+input {
 
+  width: 100%;
 
-    .btn-verify {
+  padding: 15px;
 
-      width:
-        100%;
+  border-radius: 10px;
 
-      margin-top:
-        10px;
+  border: 1px solid #444;
 
-      padding:
-        14px;
+  background: #151519;
 
-      background:
-        linear-gradient(
-          135deg,
-          #f5e3a9 0%,
-          #d4af37 50%,
-          #aa7c11 100%
-        );
+  color: white;
 
-      border:
-        none;
+  outline: none;
 
-      border-radius:
-        10px;
+  font-size: 16px;
 
-      font-weight:
-        900;
+}
 
-      color:
-        #000;
 
-      cursor:
-        pointer;
+input:focus {
 
-      text-transform:
-        uppercase;
+  border-color: #d4af37;
 
-      font-size:
-        13px;
+}
 
-      letter-spacing:
-        1px;
 
-    }
+button {
 
+  width: 100%;
 
-    .btn-verify:active {
+  padding: 15px;
 
-      transform:
-        scale(0.98);
+  border: 0;
 
-    }
+  border-radius: 10px;
 
+  margin-top: 10px;
 
-    /* ======================================================
-       DIVIDER
-       ====================================================== */
+  background: #d4af37;
 
-    .divider {
+  color: #050505;
 
-      display:
-        flex;
+  font-weight: 900;
 
-      align-items:
-        center;
+  font-size: 15px;
 
-      text-align:
-        center;
+  cursor: pointer;
 
-      margin:
-        18px 0;
+}
 
-      color:
-        #555;
 
-      font-size:
-        11px;
+button:active {
 
-      font-weight:
-        bold;
+  transform: scale(.98);
 
-      letter-spacing:
-        1px;
+}
 
-    }
 
+button.secondary {
 
-    .divider::before,
-    .divider::after {
+  background: #242428;
 
-      content:
-        '';
+  color: white;
 
-      flex:
-        1;
+}
 
-      border-bottom:
-        1px solid #222;
 
-    }
+button.danger {
 
+  background: #d93434;
 
-    .divider::before {
+  color: white;
 
-      margin-right:
-        .75em;
+}
 
-    }
 
+.result {
 
-    .divider::after {
+  display: none;
 
-      margin-left:
-        .75em;
+  border-radius: 18px;
 
-    }
+  padding: 24px;
 
+  margin-top: 18px;
 
-    /* ======================================================
-       CONFIG
-       ====================================================== */
+  border: 2px solid;
 
-    .config-toggle {
+}
 
-      margin-top:
-        14px;
 
-      text-align:
-        center;
+.result.granted {
 
-      font-size:
-        10px;
+  display: block;
 
-      color:
-        #555;
+  border-color: #26d97f;
 
-      cursor:
-        pointer;
+  background:
+    rgba(38,217,127,.08);
 
-      user-select:
-        none;
+}
 
-    }
 
+.result.duplicate {
 
-    .config-box {
+  display: block;
 
-      display:
-        none;
+  border-color: #e5b63f;
 
-      margin-top:
-        8px;
+  background:
+    rgba(229,182,63,.08);
 
-      font-size:
-        11px;
+}
 
-    }
 
+.result.rejected {
 
-    .config-box input {
+  display: block;
 
-      width:
-        100%;
+  border-color: #e04444;
 
-      padding:
-        8px 12px;
+  background:
+    rgba(224,68,68,.08);
 
-      background:
-        #000;
+}
 
-      border:
-        1px solid #333;
 
-      border-radius:
-        6px;
+.result-title {
 
-      color:
-        #fff;
+  font-size: 30px;
 
-      font-size:
-        11px;
+  font-weight: 900;
 
-    }
+  margin-bottom: 18px;
 
+}
 
-    .btn {
 
-      width:
-        100%;
+.granted .result-title {
 
-      margin-top:
-        10px;
+  color: #26d97f;
 
-      padding:
-        12px;
+}
 
-      background:
-        #222;
 
-      border:
-        1px solid #444;
+.duplicate .result-title {
 
-      border-radius:
-        8px;
+  color: #e5b63f;
 
-      font-weight:
-        bold;
+}
 
-      color:
-        #fff;
 
-      cursor:
-        pointer;
+.rejected .result-title {
 
-      text-transform:
-        uppercase;
+  color: #e04444;
 
-      font-size:
-        12px;
+}
 
-    }
 
+.info {
 
-    /* ======================================================
-       RESULT
-       ====================================================== */
+  display: grid;
 
-    .result-card {
+  grid-template-columns:
+    120px 1fr;
 
-      display:
-        none;
+  gap: 10px;
 
-      margin-top:
-        16px;
+  font-size: 14px;
 
-      padding:
-        16px;
+}
 
-      border-radius:
-        12px;
 
-      text-align:
-        center;
+.info-label {
 
-    }
+  color: #777;
 
+}
 
-    .status-badge {
 
-      display:
-        inline-block;
+.info-value {
 
-      padding:
-        6px 14px;
+  font-weight: bold;
 
-      border-radius:
-        20px;
+}
 
-      font-weight:
-        800;
 
-      font-size:
-        13px;
+.loading {
 
-      text-transform:
-        uppercase;
+  display: none;
 
-      margin-bottom:
-        10px;
+  text-align: center;
 
-    }
+  padding: 15px;
 
+  color: #d4af37;
 
-    .valid {
+}
 
-      background:
-        rgba(
-          34,
-          197,
-          94,
-          0.15
-        );
 
-      border:
-        1px solid
-        var(--green);
+.footer {
 
-      color:
-        var(--green);
+  text-align: center;
 
-    }
+  color: #555;
 
+  font-size: 11px;
 
-    .duplicate {
+  padding: 20px;
 
-      background:
-        rgba(
-          234,
-          179,
-          8,
-          0.15
-        );
+}
 
-      border:
-        1px solid #eab308;
 
-      color:
-        #facc15;
+.security {
 
-    }
+  color: #777;
 
+  text-align: center;
 
-    .invalid {
+  font-size: 11px;
 
-      background:
-        rgba(
-          239,
-          68,
-          68,
-          0.15
-        );
+  line-height: 1.6;
 
-      border:
-        1px solid
-        var(--red);
+}
 
-      color:
-        var(--red);
-
-    }
-
-
-    .attendee-info {
-
-      text-align:
-        left;
-
-      background:
-        #0a0a0c;
-
-      border:
-        1px solid #222;
-
-      border-radius:
-        8px;
-
-      padding:
-        12px;
-
-      margin-top:
-        10px;
-
-      font-size:
-        13px;
-
-    }
-
-
-    .attendee-info p {
-
-      margin-bottom:
-        8px;
-
-    }
-
-
-    .attendee-info span {
-
-      color:
-        var(--muted);
-
-    }
-
-
-    /* ======================================================
-       CONNECTION DOT
-       ====================================================== */
-
-    .connection {
-
-      margin-top:
-        12px;
-
-      text-align:
-        center;
-
-      font-size:
-        11px;
-
-      color:
-        #777;
-
-    }
-
-
-    .dot {
-
-      display:
-        inline-block;
-
-      width:
-        8px;
-
-      height:
-        8px;
-
-      border-radius:
-        50%;
-
-      background:
-        #777;
-
-      margin-right:
-        5px;
-
-    }
-
-
-    .dot.online {
-
-      background:
-        var(--green);
-
-    }
-
-
-    .dot.offline {
-
-      background:
-        var(--red);
-
-    }
-
-  </style>
+</style>
 
 </head>
 
@@ -690,307 +425,213 @@
 <body>
 
 
+<div class="container">
+
+
   <div class="header">
 
-    <h1>
-      NEXORA 2026
-    </h1>
+    <div class="small-title">
+      MASTER FRESHER
+    </div>
 
-    <p>
-      Gatekeeper Entry Verification
-    </p>
+    <div class="logo">
+      NEXORA 2026
+    </div>
+
+    <div class="subtitle">
+      Front Gate Verification System
+    </div>
+
+    <div class="status">
+
+      <span class="dot"></span>
+
+      Scanner Online
+
+    </div>
 
   </div>
 
 
-  <div class="scanner-card">
+  <!-- CAMERA -->
 
+  <div class="card">
 
-    <!-- QR CAMERA -->
-
-    <div id="reader"></div>
-
-
-    <div class="divider">
-      OR
+    <div class="manual-title">
+      Scan QR Ticket
     </div>
 
+    <div class="scanner">
 
-    <!-- MANUAL REGISTRATION -->
-
-    <div class="manual-box">
-
-      <label
-        class="field-label"
-      >
-        Registration ID
-      </label>
-
-
-      <input
-        type="text"
-        id="manualRegId"
-        class="input-reg"
-        placeholder="NEXORA26-001"
-        autocomplete="off"
-        autocorrect="off"
-        autocapitalize="characters"
-      >
-
-
-      <button
-        class="btn-verify"
-        onclick="verifyManualId()"
-      >
-
-        🔐 VERIFY REGISTRATION ID
-
-      </button>
+      <div id="reader"></div>
 
     </div>
 
+  </div>
 
-    <!-- API CONFIG -->
 
-    <div
-      class="config-toggle"
-      onclick="toggleConfig()"
+  <!-- MANUAL -->
+
+  <div class="card">
+
+    <div class="manual-title">
+      Manual Verification
+    </div>
+
+    <input
+      id="manualInput"
+      type="text"
+      autocomplete="off"
+      placeholder="NEXORA26-001 or QR5281028432126"
     >
-
-      ⚙️ Advanced Settings
-
-    </div>
-
-
-    <div
-      class="config-box"
-      id="configBox"
-    >
-
-      <input
-        type="text"
-        id="apiUrl"
-        placeholder="Apps Script Web App URL"
-      >
-
-    </div>
-
-
-    <!-- RESUME -->
 
     <button
-      class="btn"
-      id="resumeBtn"
-      style="display:none;"
-      onclick="resumeScanner()"
+      onclick="manualVerify()"
     >
-
-      Verify Next Attendee
-
+      VERIFY TICKET
     </button>
 
 
-    <!-- RESULT -->
-
-    <div
-      id="resultBox"
-      class="result-card"
+    <button
+      class="secondary"
+      onclick="clearInput()"
     >
-
-      <div
-        id="statusBadge"
-        class="status-badge"
-      ></div>
-
-
-      <h3
-        id="resultTitle"
-      ></h3>
-
-
-      <div
-        id="attendeeDetails"
-        class="attendee-info"
-      ></div>
-
-    </div>
-
-
-    <div class="connection">
-
-      <span
-        id="connectionDot"
-        class="dot"
-      ></span>
-
-      <span
-        id="connectionText"
-      >
-        Checking connection...
-      </span>
-
-    </div>
-
+      CLEAR
+    </button>
 
   </div>
+
+
+  <div
+    id="loading"
+    class="loading"
+  >
+    VERIFYING TICKET...
+  </div>
+
+
+  <!-- RESULT -->
+
+  <div
+    id="result"
+    class="result"
+  >
+
+    <div
+      id="resultTitle"
+      class="result-title"
+    >
+    </div>
+
+
+    <div
+      id="resultInfo"
+      class="info"
+    >
+    </div>
+
+
+    <button
+      onclick="resetScanner()"
+    >
+      READY FOR NEXT TICKET
+    </button>
+
+  </div>
+
+
+  <div class="security">
+
+    QR verification is performed against the
+    central NEXORA registration ledger.<br>
+
+    One verified ticket = one gate entry.
+
+  </div>
+
+
+  <div class="footer">
+
+    NEXORA 2026 • MASTER FRESHER
+
+  </div>
+
+</div>
 
 
 <script>
 
+/* =========================================================
+   CONFIGURATION
+   ========================================================= */
 
-/* ==========================================================
-   APPS SCRIPT WEB APP URL
-
-   IMPORTANT:
-   Replace this with your NEW deployment /exec URL.
-   ========================================================== */
-
-const DEFAULT_WEB_APP_URL =
-  "https://script.google.com/macros/s/AKfycbz3fG7VaAXUdf00XfJhcTHkwmvaVSj9_JwcDMWY-7i4ODYBW5baeh_8JzpxEofn6Kq1/exec";
+const API_URL =
+  "PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE";
 
 
-/* ==========================================================
-   CUSTOM API URL
-   ========================================================== */
-
-const savedApi =
-  localStorage.getItem(
-    "nexora_api_url"
-  ) || "";
+const SCANNER_SECRET =
+  "CHANGE_THIS_GATE_SECRET_2026";
 
 
-document
-  .getElementById(
-    "apiUrl"
-  )
-  .value =
-    savedApi;
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let scanner = null;
+
+let scannerRunning = false;
+
+let processing = false;
 
 
-document
-  .getElementById(
-    "apiUrl"
-  )
-  .addEventListener(
-    "change",
-    function(e) {
-
-      localStorage.setItem(
-        "nexora_api_url",
-        e.target.value.trim()
-      );
-
-    }
-  );
-
-
-/* ==========================================================
-   ACTIVE API
-   ========================================================== */
-
-function getActiveApiUrl() {
-
-  const custom =
-    document
-      .getElementById(
-        "apiUrl"
-      )
-      .value
-      .trim();
-
-
-  return (
-    custom ||
-    DEFAULT_WEB_APP_URL
-  );
-
-}
-
-
-/* ==========================================================
-   CONFIG
-   ========================================================== */
-
-function toggleConfig() {
-
-  const box =
-    document.getElementById(
-      "configBox"
-    );
-
-
-  box.style.display =
-    box.style.display ===
-    "block"
-      ? "none"
-      : "block";
-
-}
-
-
-/* ==========================================================
-   QR SCANNER
-   ========================================================== */
-
-let html5QrCode =
-  new Html5Qrcode(
-    "reader"
-  );
-
-
-let isProcessing =
-  false;
-
-
-/* ==========================================================
-   START CAMERA
-   ========================================================== */
+/* =========================================================
+   START SCANNER
+   ========================================================= */
 
 function startScanner() {
 
-  html5QrCode
+  scanner =
+    new Html5Qrcode(
+      "reader"
+    );
+
+
+  scanner
     .start(
 
       {
-        facingMode:
-          "environment"
+        facingMode: {
+          exact: "environment"
+        }
       },
 
       {
-        fps:
-          10,
+        fps: 10,
 
         qrbox: {
-          width:
-            250,
+          width: 260,
+          height: 260
+        },
 
-          height:
-            250
-        }
+        aspectRatio: 1.0
 
       },
 
-      onScanSuccess
+      onScanSuccess,
+
+      onScanFailure
 
     )
-
     .then(function() {
 
-      setConnection(
-        true
-      );
+      scannerRunning = true;
 
     })
-
-    .catch(function(err) {
+    .catch(function(error) {
 
       console.error(
-        "Camera error:",
-        err
-      );
-
-      setConnection(
-        false
+        "Camera start error:",
+        error
       );
 
     });
@@ -998,65 +639,71 @@ function startScanner() {
 }
 
 
-/* ==========================================================
+/* =========================================================
    QR SUCCESS
-   ========================================================== */
+   ========================================================= */
 
-async function onScanSuccess(
+function onScanSuccess(
   decodedText
 ) {
 
-  if (
-    isProcessing
-  ) return;
+  if (processing) {
+
+    return;
+
+  }
 
 
-  isProcessing =
-    true;
+  processing = true;
 
 
-  try {
-
-    await html5QrCode.pause();
-
-  } catch (_) {}
-
-
-  await executeVerification({
-
-    qrCode:
-      decodedText.trim()
-
+  verifyCredential({
+    qrCode: decodedText
   });
 
 }
 
 
-/* ==========================================================
-   MANUAL REGISTRATION ID
-   ========================================================== */
+/* =========================================================
+   QR FAILURE
+   ========================================================= */
 
-async function verifyManualId() {
+function onScanFailure(error) {
+
+  /*
+   * Ignore continuous camera decode failures.
+   */
+
+}
+
+
+/* =========================================================
+   MANUAL
+   ========================================================= */
+
+function manualVerify() {
+
+  if (processing) {
+
+    return;
+
+  }
+
 
   const input =
-    document.getElementById(
-      "manualRegId"
-    );
-
-
-  const regId =
-    input
+    document
+      .getElementById(
+        "manualInput"
+      )
       .value
-      .trim()
-      .toUpperCase();
+      .trim();
 
 
-  if (
-    !regId
-  ) {
+  if (!input) {
 
-    alert(
-      "Please enter Registration ID."
+    showRejected(
+      "MISSING CREDENTIAL",
+      "Enter a registration ID or QR code."
     );
 
     return;
@@ -1064,72 +711,81 @@ async function verifyManualId() {
   }
 
 
+  processing = true;
+
+
+  const upper =
+    input.toUpperCase();
+
+
+  /*
+   * Registration
+   */
   if (
-    isProcessing
-  ) return;
+    upper.indexOf(
+      "NEXORA26-"
+    ) === 0
+  ) {
+
+    verifyCredential({
+
+      regId: upper
+
+    });
 
 
-  isProcessing =
-    true;
+    return;
+
+  }
 
 
-  try {
+  /*
+   * QR
+   */
+  verifyCredential({
 
-    await html5QrCode.pause();
-
-  } catch (_) {}
-
-
-  await executeVerification({
-
-    regId:
-      regId
+    qrCode: upper
 
   });
 
 }
 
 
-/* ==========================================================
-   SEND TO APPS SCRIPT
-   ========================================================== */
+/* =========================================================
+   VERIFY
+   ========================================================= */
 
-async function executeVerification(
-  payload
+async function verifyCredential(
+  credential
 ) {
 
-  const apiUrl =
-    getActiveApiUrl();
-
-
-  showLoading();
+  showLoading(true);
 
 
   try {
 
-    if (
-      !apiUrl ||
-      apiUrl.includes(
-        "PASTE_YOUR"
-      )
-    ) {
+    const payload = {
 
-      throw new Error(
-        "Apps Script Web App URL is not configured."
-      );
+      ...credential,
 
-    }
+      secret:
+        SCANNER_SECRET
+
+    };
 
 
+    /*
+     * text/plain avoids unnecessary
+     * CORS preflight.
+     */
     const response =
       await fetch(
 
-        apiUrl,
+        API_URL,
 
         {
 
-          method:
-            "POST",
+          method: "POST",
 
           headers: {
 
@@ -1141,201 +797,58 @@ async function executeVerification(
           body:
             JSON.stringify(
               payload
-            ),
-
-          redirect:
-            "follow"
+            )
 
         }
 
       );
 
 
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        "HTTP " +
-        response.status
-      );
-
-    }
-
-
     const data =
       await response.json();
 
 
-    setConnection(
-      true
-    );
-
-
-    renderResult(
+    handleResponse(
       data
     );
 
 
-  } catch (err) {
+  } catch (error) {
 
     console.error(
-      "Verification error:",
-      err
+      error
     );
 
 
-    setConnection(
-      false
+    showRejected(
+      "SERVER ERROR",
+      "Unable to contact the verification server."
     );
 
+  } finally {
 
-    renderError(
-      "Connection Failed. Check the Apps Script Web App URL and make sure access is set to Anyone."
-    );
+    showLoading(false);
 
   }
 
 }
 
 
-/* ==========================================================
-   RESULT
-   ========================================================== */
+/* =========================================================
+   HANDLE RESPONSE
+   ========================================================= */
 
-function renderResult(
+function handleResponse(
   data
 ) {
 
-  const box =
-    document.getElementById(
-      "resultBox"
-    );
-
-
-  const badge =
-    document.getElementById(
-      "statusBadge"
-    );
-
-
-  const title =
-    document.getElementById(
-      "resultTitle"
-    );
-
-
-  const details =
-    document.getElementById(
-      "attendeeDetails"
-    );
-
-
-  document
-    .getElementById(
-      "resumeBtn"
-    )
-    .style.display =
-      "block";
-
-
-  box.style.display =
-    "block";
-
-
-  /* ========================================================
-     ACCESS GRANTED
-     ======================================================== */
-
   if (
-    data.success
+    data.success === true
   ) {
 
-    badge.className =
-      "status-badge valid";
-
-
-    badge.innerText =
-      "ACCESS GRANTED";
-
-
-    title.innerText =
-      data.attendee &&
-      data.attendee.name
-        ? data.attendee.name
-        : "Attendee";
-
-
-    details.innerHTML = `
-
-      <p>
-        <span>
-          Registration ID:
-        </span>
-
-        <b>
-          ${safe(
-            data.attendee.regId
-          )}
-        </b>
-      </p>
-
-
-      <p>
-        <span>
-          QR Code:
-        </span>
-
-        <b>
-          ${safe(
-            data.attendee.qrCode
-          )}
-        </b>
-      </p>
-
-
-      <p>
-        <span>
-          Category:
-        </span>
-
-        <b>
-          ${safe(
-            data.attendee.category
-          )}
-        </b>
-      </p>
-
-
-      <p>
-        <span>
-          Branch:
-        </span>
-
-        <b>
-          ${safe(
-            data.attendee.dept
-          )}
-          (${safe(
-            data.attendee.sem
-          )})
-        </b>
-      </p>
-
-
-      <p>
-        <span>
-          Entry Time:
-        </span>
-
-        <b>
-          ${safe(
-            data.attendee.entryTime
-          )}
-        </b>
-      </p>
-
-    `;
+    showGranted(
+      data
+    );
 
 
     return;
@@ -1343,45 +856,13 @@ function renderResult(
   }
 
 
-  /* ========================================================
-     DUPLICATE
-     ======================================================== */
-
   if (
-    data.duplicate
+    data.duplicate === true
   ) {
 
-    badge.className =
-      "status-badge duplicate";
-
-
-    badge.innerText =
-      "ALREADY CHECKED IN";
-
-
-    title.innerText =
-      data.attendee &&
-      data.attendee.name
-        ? data.attendee.name
-        : "Attendee";
-
-
-    details.innerHTML = `
-
-      <p
-        style="
-          color:#facc15;
-          font-weight:bold;
-        "
-      >
-
-        ${safe(
-          data.message
-        )}
-
-      </p>
-
-    `;
+    showDuplicate(
+      data
+    );
 
 
     return;
@@ -1389,292 +870,377 @@ function renderResult(
   }
 
 
-  /* ========================================================
-     REJECTED
-     ======================================================== */
+  if (
+    data.reason ===
+    "PAYMENT_NOT_PAID"
+  ) {
 
-  badge.className =
-    "status-badge invalid";
-
-
-  badge.innerText =
-    "ENTRY REJECTED";
-
-
-  title.innerText =
-    "Verification Failed";
+    showRejected(
+      "ENTRY REJECTED",
+      "Payment has not been verified.",
+      data
+    );
 
 
-  details.innerHTML = `
+    return;
 
-    <p
-      style="
-        color:#ef4444;
-        font-weight:bold;
-      "
-    >
+  }
 
-      ${safe(
-        data.message ||
-        "Verification failed."
-      )}
 
-    </p>
+  if (
+    data.reason ===
+    "PASS_NOT_CONFIRMED"
+  ) {
 
-  `;
+    showRejected(
+      "ENTRY REJECTED",
+      "Pass has not been confirmed.",
+      data
+    );
+
+
+    return;
+
+  }
+
+
+  if (
+    data.reason ===
+    "INVALID_CREDENTIAL"
+  ) {
+
+    showRejected(
+      "ENTRY REJECTED",
+      "Registration not found."
+    );
+
+
+    return;
+
+  }
+
+
+  showRejected(
+
+    "ENTRY REJECTED",
+
+    data.message ||
+    "Credential could not be verified."
+
+  );
 
 }
 
 
-/* ==========================================================
-   ERROR
-   ========================================================== */
+/* =========================================================
+   RESULT UI
+   ========================================================= */
 
-function renderError(
-  msg
+function showGranted(
+  data
 ) {
 
-  const box =
+  const result =
     document.getElementById(
-      "resultBox"
+      "result"
     );
 
 
-  const badge =
-    document.getElementById(
-      "statusBadge"
-    );
+  result.className =
+    "result granted";
 
 
-  const title =
-    document.getElementById(
-      "resultTitle"
-    );
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    "ACCESS GRANTED";
 
 
-  const details =
-    document.getElementById(
-      "attendeeDetails"
-    );
-
-
-  document
-    .getElementById(
-      "resumeBtn"
-    )
-    .style.display =
-      "block";
-
-
-  box.style.display =
-    "block";
-
-
-  badge.className =
-    "status-badge invalid";
-
-
-  badge.innerText =
-    "ERROR";
-
-
-  title.innerText =
-    "Check Connection";
-
-
-  details.innerHTML = `
-
-    <p
-      style="
-        color:#ef4444;
-      "
-    >
-
-      ${safe(msg)}
-
-    </p>
-
-  `;
+  document.getElementById(
+    "resultInfo"
+  ).innerHTML =
+    buildInfo(data);
 
 }
 
 
-/* ==========================================================
+function showDuplicate(
+  data
+) {
+
+  const result =
+    document.getElementById(
+      "result"
+    );
+
+
+  result.className =
+    "result duplicate";
+
+
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    "ALREADY CHECKED IN";
+
+
+  document.getElementById(
+    "resultInfo"
+  ).innerHTML =
+    buildInfo(data);
+
+}
+
+
+function showRejected(
+  title,
+  message,
+  data
+) {
+
+  const result =
+    document.getElementById(
+      "result"
+    );
+
+
+  result.className =
+    "result rejected";
+
+
+  let info =
+    "<div class='info-label'>STATUS</div>" +
+
+    "<div class='info-value'>" +
+    escapeHtml(message) +
+    "</div>";
+
+
+  if (data) {
+
+    info += buildInfo(
+      data
+    );
+
+  }
+
+
+  document.getElementById(
+    "resultTitle"
+  ).textContent =
+    title;
+
+
+  document.getElementById(
+    "resultInfo"
+  ).innerHTML =
+    info;
+
+}
+
+
+/* =========================================================
+   BUILD INFO
+   ========================================================= */
+
+function buildInfo(
+  data
+) {
+
+  let html = "";
+
+
+  if (
+    data.registrationId
+  ) {
+
+    html += row(
+      "REGISTRATION",
+      data.registrationId
+    );
+
+  }
+
+
+  if (
+    data.name
+  ) {
+
+    html += row(
+      "NAME",
+      data.name
+    );
+
+  }
+
+
+  if (
+    data.department
+  ) {
+
+    html += row(
+      "DEPARTMENT",
+      data.department
+    );
+
+  }
+
+
+  if (
+    data.semester
+  ) {
+
+    html += row(
+      "SEMESTER",
+      data.semester
+    );
+
+  }
+
+
+  if (
+    data.category
+  ) {
+
+    html += row(
+      "CATEGORY",
+      data.category
+    );
+
+  }
+
+
+  if (
+    data.entryTime
+  ) {
+
+    html += row(
+      "ENTRY TIME",
+      data.entryTime
+    );
+
+  }
+
+
+  return html;
+
+}
+
+
+function row(
+  label,
+  value
+) {
+
+  return (
+
+    "<div class='info-label'>" +
+
+    escapeHtml(label) +
+
+    "</div>" +
+
+    "<div class='info-value'>" +
+
+    escapeHtml(value) +
+
+    "</div>"
+
+  );
+
+}
+
+
+/* =========================================================
    LOADING
-   ========================================================== */
+   ========================================================= */
 
-function showLoading() {
-
-  const box =
-    document.getElementById(
-      "resultBox"
-    );
-
-
-  const badge =
-    document.getElementById(
-      "statusBadge"
-    );
-
-
-  const title =
-    document.getElementById(
-      "resultTitle"
-    );
-
-
-  box.style.display =
-    "block";
-
-
-  badge.className =
-    "status-badge duplicate";
-
-
-  badge.innerText =
-    "VERIFYING...";
-
-
-  title.innerText =
-    "Checking Database...";
-
-
-  document
-    .getElementById(
-      "attendeeDetails"
-    )
-    .innerHTML =
-      "";
-
-}
-
-
-/* ==========================================================
-   RESUME
-   ========================================================== */
-
-function resumeScanner() {
-
-  document
-    .getElementById(
-      "resultBox"
-    )
-    .style.display =
-      "none";
-
-
-  document
-    .getElementById(
-      "resumeBtn"
-    )
-    .style.display =
-      "none";
-
-
-  document
-    .getElementById(
-      "manualRegId"
-    )
-    .value =
-      "";
-
-
-  isProcessing =
-    false;
-
-
-  try {
-
-    html5QrCode.resume();
-
-  } catch (_) {
-
-    startScanner();
-
-  }
-
-}
-
-
-/* ==========================================================
-   CONNECTION
-   ========================================================== */
-
-function setConnection(
-  online
+function showLoading(
+  state
 ) {
 
-  const dot =
-    document.getElementById(
-      "connectionDot"
-    );
-
-
-  const text =
-    document.getElementById(
-      "connectionText"
-    );
-
-
-  if (
-    online
-  ) {
-
-    dot.className =
-      "dot online";
-
-
-    text.innerText =
-      "Scanner connected";
-
-  } else {
-
-    dot.className =
-      "dot offline";
-
-
-    text.innerText =
-      "Connection problem";
-
-  }
+  document.getElementById(
+    "loading"
+  ).style.display =
+    state
+      ? "block"
+      : "none";
 
 }
 
 
-/* ==========================================================
-   SAFE HTML
-   ========================================================== */
+/* =========================================================
+   RESET
+   ========================================================= */
 
-function safe(
+async function resetScanner() {
+
+  processing = false;
+
+
+  document.getElementById(
+    "result"
+  ).className =
+    "result";
+
+
+  document.getElementById(
+    "manualInput"
+  ).value = "";
+
+
+  showLoading(false);
+
+}
+
+
+/* =========================================================
+   CLEAR
+   ========================================================= */
+
+function clearInput() {
+
+  document.getElementById(
+    "manualInput"
+  ).value = "";
+
+
+  document
+    .getElementById(
+      "manualInput"
+    )
+    .focus();
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(
   value
 ) {
 
   return String(
-    value == null
-      ? ""
-      : value
+    value ?? ""
   )
-
     .replace(
       /&/g,
       "&amp;"
     )
-
     .replace(
       /</g,
       "&lt;"
     )
-
     .replace(
       />/g,
       "&gt;"
     )
-
     .replace(
       /"/g,
       "&quot;"
     )
-
     .replace(
       /'/g,
       "&#039;"
@@ -1683,16 +1249,18 @@ function safe(
 }
 
 
-/* ==========================================================
-   START
-   ========================================================== */
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
 
-window.onload =
+window.addEventListener(
+  "load",
   function() {
 
     startScanner();
 
-  };
+  }
+);
 
 </script>
 
